@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>Murder Mystery 2 Trade | Private Map</title>
+
+<style>
+:root {
+  --bg: #050505;
+  --panel: #101010;
+  --border: #272727;
+  --red: #ff4148;
+  --text: #f4f4f4;
+  --muted: #8a8a8a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+header {
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: #080808;
+}
+
+.brand {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.brand span {
+  color: var(--red);
+}
+
+.live {
+  color: var(--red);
+  font-size: 11px;
+  letter-spacing: 1px;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: .35; }
+}
+
+main {
+  width: min(100% - 28px, 900px);
+  margin: 25px auto;
+}
+
+h1 {
+  font-size: clamp(22px, 5vw, 34px);
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 22px;
+}
+
+.panel {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 15px;
+}
+
+.video-wrap {
+  position: relative;
+  background: #000;
+  border: 1px solid #292929;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.video-status {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  pointer-events: none;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.video-status span {
+  padding: 6px 8px;
+  background: #100707e8;
+  border: 1px solid #5c2020;
+  border-radius: 5px;
+  color: #ff646a;
+}
+
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.play-overlay button {
+  pointer-events: auto;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: 1px solid #733033;
+  background: #180b0be8;
+  color: #ff6268;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.stat {
+  background: #090909;
+  border: 1px solid var(--border);
+  padding: 14px;
+  border-radius: 8px;
+}
+
+.label {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.number {
+  font-size: 25px;
+  font-weight: 750;
+}
+
+.online {
+  color: #6de2a0;
+  font-size: 13px;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 16px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  color: white;
+  background: #171717;
+}
+
+.btn-primary {
+  background: #210c0d;
+  border-color: #74282d;
+  color: #ff646a;
+  transition: background .2s, border-color .2s;
+}
+
+.btn-primary:hover {
+  background: #321012;
+  border-color: #a73b42;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 15px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 6px;
+  background: #101010;
+  color: #999;
+  border: 1px solid #262626;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.tab.active {
+  color: #ff646a;
+  border-color: #74282d;
+  background: #1b0b0c;
+}
+
+.tab-content {
+  line-height: 1.7;
+  font-size: 13px;
+  color: #c2c2c2;
+}
+
+.tab-content h2 {
+  font-size: 16px;
+  color: #fff;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  margin-top: 30px;
+  padding: 22px 15px;
+  text-align: center;
+  color: #666;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 480px) {
+  header { padding: 15px; }
+  main { width: calc(100% - 22px); margin-top: 20px; }
+  .panel { padding: 10px; }
+  .number { font-size: 22px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="brand">
+    MM2 <span>TRADE</span>
+  </div>
+  <div class="live">● LIVE MAP</div>
+</header>
+
+<main>
+  <h1>Murder Mystery 2</h1>
+  <div class="subtitle">
+    Private Map · Trade Community · By Nikilis
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="map">Live Map</button>
+    <button class="tab" data-tab="trade">Trade</button>
+    <button class="tab" data-tab="about">About</button>
+  </div>
+
+  <section id="map" class="tab-content">
+    <div class="panel">
+      <div class="video-wrap">
+        <!-- Ganti VIDEO_URL.mp4 dengan URL video milikmu -->
+        <video id="liveVideo"
+          playsinline
+          preload="metadata"
+          controls
+          poster=""
+        >
+          <source src="VIDEO_URL.mp4" type="video/mp4">
+          Browser kamu tidak mendukung video HTML5.
+        </video>
+
+        <div class="video-status">
+          <span>● LIVE</span>
+          <span>MM2 MAP</span>
+        </div>
+
+        <div class="play-overlay" id="playOverlay">
+          <button id="playBtn" aria-label="Putar video">▶</button>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="label">PLAYERS IN MAP</div>
+          <div class="number">1,000</div>
+          <div class="label">Angka demo</div>
+        </div>
+        <div class="stat">
+          <div class="label">SERVER STATUS</div>
+          <div class="number online">● Online</div>
+          <div class="label">Status tampilan</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary"
+           href="https://www.roblox.com/games/142823291/Murder-Mystery-2"
+           target="_blank"
+           rel="noopener noreferrer">
+          JOIN MAP ↗
+        </a>
+
+        <button class="btn" id="pauseBtn">
+          Pause Video
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="trade" class="tab-content hidden">
+    <div class="panel">
+      <h2>Trade Center</h2>
+      <p>Selamat datang di area komunitas MM2 Trade.</p>
+      <p>Diskusikan item, knife, gun, dan nilai trade
+      dengan pemain lain.</p>
+      <p>Selalu periksa item sebelum menyetujui trade.</p>
+      <a class="btn btn-primary"
+         href="https://www.roblox.com/games/142823291/Murder-Mystery-2"
+         target="_blank"
+         rel="noopener noreferrer">
+        Open Murder Mystery 2 ↗
+      </a>
+    </div>
+  </section>
+
+  <section id="about" class="tab-content hidden">
+    <div class="panel">
+      <h2>About This Page</h2>
+      <p>MM2 Trade Private Map adalah halaman komunitas
+      bertema gelap dengan tampilan video, statistik demo,
+      dan akses menuju game Roblox.</p>
+      <p>Video dan jumlah pemain pada halaman ini bukan
+      feed resmi atau data live dari server Roblox.</p>
+      <p>Jangan masukkan password atau cookie Roblox
+      ke halaman pihak ketiga.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  MURDER MYSTERY 2 TRADE<br>
+  Fan-made community page · Not affiliated with Roblox
+  or Nikilis.
+</footer>
+
+<script>
+const video = document.getElementById("liveVideo");
+const playBtn = document.getElementById("playBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const overlay = document.getElementById("playOverlay");
+
+async function playVideo() {
+  if (!video.querySelector("source").src ||
+      video.querySelector("source").getAttribute("src")
+        === "VIDEO_URL.mp4") {
+    alert("Tambahkan URL video MP4 milikmu pada VIDEO_URL.mp4.");
+    return;
+  }
+
+  try {
+    await video.play();
+    overlay.classList.add("hidden");
+    pauseBtn.textContent = "Pause Video";
+  } catch (error) {
+    alert("Video tidak bisa diputar. Periksa URL video.");
+  }
+}
+
+playBtn.addEventListener("click", playVideo);
+
+pauseBtn.addEventListener("click", () => {
+  if (video.paused) {
+    playVideo();
+  } else {
+    video.pause();
+    pauseBtn.textContent = "Lanjutkan Video";
+    overlay.classList.remove("hidden");
+  }
+});
+
+video.addEventListener("play", () => {
+  overlay.classList.add("hidden");
+  pauseBtn.textContent = "Pause Video";
+});
+
+video.addEventListener("pause", () => {
+  overlay.classList.remove("hidden");
+});
+
+video.addEventListener("ended", () => {
+  overlay.classList.remove("hidden");
+  pauseBtn.textContent = "Putar Ulang";
+});
+
+document.querySelectorAll(".tab").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.classList.toggle("active", tab === button);
+    });
+
+    document.querySelectorAll(".tab-content").forEach(section => {
+      section.classList.toggle(
+        "hidden",
+        section.id !== button.dataset.tab
+      );
+    });
+  });
+});
+</script>
+</body>
+  </html>
+  
